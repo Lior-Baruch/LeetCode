@@ -20,29 +20,29 @@ def findMedianSortedArrays(nums1, nums2):
     m = len(nums2)
     i = 0
     j = 0
-    is_odd = (n + m) % 2 == 1
-    median = 0
-    while i + j < (n + m) // 2 + 1:
+    k = 0
+    is_even = (n + m) % 2 == 0
+    nums3 = [0] * ((n + m) // 2 + 1)
+    while k < len(nums3):
+        # if nums1 is empty
         if i == n:
-            median = nums2[j]
+            nums3[k] = nums2[j]
             j += 1
+        # if nums2 is empty
         elif j == m:
-            median = nums1[i]
+            nums3[k] = nums1[i]
             i += 1
+        # if nums1[i] < nums2[j]
         elif nums1[i] < nums2[j]:
-            median = nums1[i]
+            nums3[k] = nums1[i]
             i += 1
+        # if nums1[i] >= nums2[j]
         else:
-            median = nums2[j]
+            nums3[k] = nums2[j]
             j += 1
-    if is_odd:
-        return median
+        k += 1
+
+    if is_even:
+        return (nums3[-1] + nums3[-2]) / 2.0
     else:
-        if i == n:
-            return (median + nums2[j]) / 2
-        elif j == m:
-            return (median + nums1[i]) / 2
-        else:
-            return (median + min(nums1[i], nums2[j])) / 2
-
-
+        return nums3[-1]
